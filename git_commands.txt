@@ -1,0 +1,122 @@
+//*
+Author: Faiaz Zaman
+Email: fbzaman93@gmail.com
+*/
+
+
+### git commands
+
+### origin = Name of the link to the remote repository. The name is set by default when a repository is cloned.
+
+### Initialising a git repository
+### First access the folder you want to git and then git init. The commands are shown below
+
+cd ~ //home folder
+cd myGitProject/  //Assuming there is a folder named 'myGitProject' in home folder.
+git init //Makes the 'myGitProject' folder a git folder and the folder can now utilise Git and Github features
+
+### Cloning
+git clone <CloneLinkFromGithub>
+
+### Checking commit history
+
+git log // Will show most recent commits first
+git log -n1 //shows the most reent commit (i.e. the last commit made)
+
+### Commiting changes (Both commands needs to be executed in the order shown)
+
+git add <filename> // Adds the file to the staging area 
+git commit         //commits the changes. Will open up a text editor for commit message. Type an appropriate 		           //commit message and save it. There are style guides for how commit message should be written.
+
+### Fetching
+
+git fetch origin master // Pulls all the object from the master branch of the fork that is not present in the 				//master branch of the local repsoitory	  
+
+### Merging
+
+Git merge origin master      // merges remote master into your local master
+Git merge master <branchname/theBranchYouAreCurrentlyIn>    //merges the master into your experimental branch
+
+### Checking the difference between a commit and its parent
+
+git show <commitId>  // shows the difference between the commit (the one you used in the show command) and it's 		     //parent. 
+
+### Checking difference between two specific commit
+git diff <commitId_1> <commitId_2> 
+
+### Creating Branch
+
+git branch <newbranchName>  //Creates a new branch
+
+### Moving to different branches (or checking out as refferd by git)
+
+git checkout <branchname> 
+git checkout master // Moves to master branch 
+
+### Pushing from local repository to remote
+
+git push origin master //Pushes commits or changes to the remote master so that it is updated with the local      			//master
+
+git push origin <branchName> // 1.Pushes a local branch to the remote master and adds the branch to the remote 				     // master incase the branch hasn't been pushed before.
+			     // 2.Pushes the changes in the local branch to the remote branch so that the remote
+			     // branch is up-to-date with the local branch
+
+### Pulling from remote to local repository
+git pull origin master // Pulls commits or changes from remote master to local master so that the local master is 
+		       // up-to-date with remote master
+
+git pull origin <branchName>  //Pulls commits or changes from the remote branch to the same local branch so that 				// the local branch is up-to-date with the remote branch.
+
+### Git pull = Git Fetch + Git Merge (But not Merge + fetch)
+
+### Forking
+### Done using Github interface. Go to the Github repository you want to fork and click the fork button. Forking ### means copying other's repository to your own repository so that you can use it for your own project. In this ### way, the changes you made won't effect the original repository.  
+
+### Pull request
+### Done using Github interface. Select the branch you want to do pull request on and then click 'pull request'. ### Pull request is basically used on a project where multiple people is collaborating from multiple different 
+### computers. It allows other people to review your changes which should be typically in a branch before merging ### the branch into master. Master contains the working version of the code and testing and experimenting 	
+### shouldn't be done on master. In this way, if there are errors on your branch code you can get feedback on it 
+### and then after making necessary changes you can safely merge it to the master.
+
+
+### Updating a cross-repository pull request / Keeping fork up-to-date
+### The following steps needs to be followed
+
+### Step 1: Add the original repository (not the fork) as a remote by cloning. 
+
+git remote add upstream <OriginalRepositoryCloneLink> 
+
+### The original repository clone link should be in the 'clone or download' section in the page of the original 
+### repository in Github.
+
+### Step 2: Checkout to master branch if you are in another branch and then pull master from upstream (The 
+### original repository). This will save the changes in the master branch of the original repository to your 
+### master branch of your local repository. The commands are shown below.
+
+git checkout master
+git pull upstream master
+
+### Step 3: Now checkout back to the branch you were in and merge the updated master into your branch. 
+
+git merge master <branchName>
+
+//*
+If there is a merge conflict resolve it. Open the file that is responsible for the conflict. The part shown after '<<<<<<HEAD' is your changes. The part shown after '|||||Merge common ancestors' is the original version without any changes. The part shown after '=========' is the changes made by others. The part shown after '>>>>>>master' is the remaining of file. Decide which change to keep which can be both your changes and the changes made by others or you decide to discard all the changes and keep the original.Remove the changes that you don't want to keep and also remove all special lines (the one mentioned above) added to the file. Those were just for your understanding purposes so that you know what are the changes and the lines are not part of the original code (Was added by git merge when there was a conflict). This is just a generalised description of how to resolve conflict. The details are not mentioned here. If you are confused search for how to resolve merge conflict.
+*/
+
+### Step 4: Now commit the chages you have made during merging. To do that simply add the changed file to the 
+### staging area and commit it. The commands are below.
+
+git add <filename> 
+git commit
+
+### Step 5: Push your changes (the changes during merging) of the local branch to the remote branch on your fork. 
+### The command is shown below.  
+
+git push origin <branchName> 
+
+### Step 6: You also need to update the master branch of your fork as there was changes to the master branch in ### the origianl repository (the one you forked from). You already updated the master of your local repository in ### step 2 but the master of your fork is still not up-to-date. The command is below.
+
+git checkout master (Assuming you should be in another branch from step 5)
+git push origin master
+
